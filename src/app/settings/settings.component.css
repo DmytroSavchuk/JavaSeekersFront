@@ -1,0 +1,4 @@
+btn-brows:focus {
+  background-color: darkblue;
+  transition-duration: 0.3s;
+}
