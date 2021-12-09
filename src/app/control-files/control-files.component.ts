@@ -20,7 +20,7 @@ export class ControlFilesComponent implements OnInit {
       searching: false,
       data: [],
       columns: [{
-        title: 'ClientResponse',
+        title: 'Client',
         data: 'client'
       }, {
         title: 'Name',
