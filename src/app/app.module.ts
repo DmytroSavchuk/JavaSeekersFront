@@ -9,6 +9,7 @@ import {ArtifactsComponent} from "./artifacts/artifacts.component";
 import {WarningsComponent} from "./warnings/warnings.component";
 import {SettingsComponent} from "./settings/settings.component";
 import {DataTablesModule} from "angular-datatables";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {DataTablesModule} from "angular-datatables";
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        DataTablesModule
+        DataTablesModule,
+        FormsModule
     ],
   providers: [],
   bootstrap: [AppComponent, ControlFilesComponent, ArtifactsComponent, WarningsComponent, SettingsComponent]

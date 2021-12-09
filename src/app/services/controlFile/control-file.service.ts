@@ -11,7 +11,7 @@ export class ControlFileService {
   constructor(private client: HttpClient) {
   }
 
-  public getControlFiles(name: string, moduleId: number, client: string) {
-    return this.client.get<ControlFiles>(this.link);
+  public getControlFiles(name = "", moduleId = <number><unknown>null, client = "") {
+    return this.client.get<ControlFiles>(`${this.link}?controlNameFilter=${name}&client=${client}${moduleId == null ? "" : "&module=" + moduleId}`);
   }
 }

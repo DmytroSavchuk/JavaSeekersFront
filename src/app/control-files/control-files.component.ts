@@ -40,6 +40,10 @@ export class ControlFilesComponent implements OnInit {
   clients: string[] = [];
   modules: Module[] = [];
 
+  clientFilter: string = "Client";
+  moduleFilter: any = "Module";
+  nameFilter: string = "";
+
   ngOnInit(): void {
     this.clientService.getClients().subscribe((clientsResponse) => {
       this.clients = clientsResponse.clients;
@@ -50,10 +54,10 @@ export class ControlFilesComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.controlFileService.getControlFiles("", 0, "").subscribe(controlFiles => {
+    this.controlFileService.getControlFiles().subscribe(controlFiles => {
       this.dtOptions.data = controlFiles.controlFiles;
       this.dtTrigger.next(null);
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -67,6 +71,16 @@ export class ControlFilesComponent implements OnInit {
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.dtTrigger.next(null);
+    });
+  }
+
+  getFilteredControlFiles() {
+    let module = this.moduleFilter == "Module" ? "" : this.moduleFilter;
+    let client = this.clientFilter == "Client" ? "" : this.clientFilter;
+
+    this.controlFileService.getControlFiles(this.nameFilter, module, client).subscribe(controlFiles => {
+      this.dtOptions.data = controlFiles.controlFiles;
+      this.rerender();
     });
   }
 }

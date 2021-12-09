@@ -7,16 +7,16 @@
       <div class="col-1"></div>
       <div class="col-5">
         <div class="row justify-content-between">
-          <input class="form-control" type="text" placeholder="Name" style="width: 50%">
-          <select class="form-select" aria-label="Default select example" style="margin-bottom: 1%">
-            <option selected disabled>Client</option>
+          <input [(ngModel)]="nameFilter" class="form-control" type="text" placeholder="Name" style="width: 50%">
+          <select [(ngModel)]="clientFilter" class="form-select" aria-label="Default select example" style="margin-bottom: 1%">
+            <option selected>Client</option>
             <option *ngFor="let client of clients">{{client}}</option>
           </select>
-          <select class="form-select" aria-label="Default select example" style="margin-bottom: 1%">
-            <option selected disabled>Module</option>
+          <select [(ngModel)]="moduleFilter" class="form-select" aria-label="Default select example" style="margin-bottom: 1%">
+            <option selected>Module</option>
             <option *ngFor="let module of modules">{{module.moduleId}}</option>
           </select>
-          <button type="button" class="btn btn-outline-dark" style="margin-bottom: 1%; float: right">
+          <button (click)="getFilteredControlFiles()" type="button" class="btn btn-outline-dark" style="margin-bottom: 1%; float: right">
             Search
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                  viewBox="0 0 16 16">
