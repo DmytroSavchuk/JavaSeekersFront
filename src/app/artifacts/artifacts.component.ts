@@ -9,6 +9,7 @@ import {Module} from "../models/Module";
 import {ArtifactTypeService} from "../services/artifactType/artifact-type.service";
 import {ArtifactErrorsCheckService} from "../services/artifactErrorsCheck/artifact-errors-check.service";
 import {ArtifactErrorChecksResponse} from "../models/ArtifactErrorChecksResponse";
+import {ArtifactErrorsUi} from "../models/ArtifactErrorsUi";
 
 @Component({
   selector: 'app-artifacts',
@@ -39,7 +40,17 @@ export class ArtifactsComponent implements OnInit, AfterViewInit, OnDestroy {
       }, {
         title: 'Errors Count',
         data: 'errorsCount'
-      }]
+      }],
+      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+        const self = this;
+        $('td', row).off('click');
+        $('td', row).on('click', () => {
+          this.artifactErrorCheckService.changeSelectedArtifact(
+            new ArtifactErrorsUi((<any>data).type, (<any>data).name, (<any>data).path, (<any>data).artifactErrorChecks, (<any>data).module));
+          this.router.navigate([`../warnings/`], {relativeTo: this.route});
+        });
+        return row;
+      }
     };
   }
 
@@ -73,7 +84,9 @@ export class ArtifactsComponent implements OnInit, AfterViewInit, OnDestroy {
           name: e.name,
           module: moduleId,
           type: e.type,
-          errorsCount: e.artifactErrorChecks.length
+          path: e.path,
+          errorsCount: e.artifactErrorChecks.length,
+          artifactErrorChecks: e.artifactErrorChecks
         }
       });
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ArtifactErrorChecksResponse} from "../../models/ArtifactErrorChecksResponse";
-import {ControlFile} from "../../models/ControlFile";
+import {ArtifactErrorsUi} from "../../models/ArtifactErrorsUi";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,15 @@ export class ArtifactErrorsCheckService {
   constructor(private client: HttpClient) {
   }
 
-  public getArtifactErrorChecks(controlFile: ControlFile) {
-    return this.client.get<ArtifactErrorChecksResponse>(`${this.link}?controlPath=${controlFile.client}/${controlFile.moduleId}/${controlFile.name.split("/").pop()}`);
+  public getArtifactErrorChecks(controlFile: string) {
+    return this.client.get<ArtifactErrorChecksResponse>(`${this.link}?controlPath=${controlFile}`);
+  }
+
+  public changeSelectedArtifact(artifactErrorChecks: ArtifactErrorsUi) {
+    localStorage.setItem("selectedArtifact", JSON.stringify(artifactErrorChecks));
+  }
+
+  public getSelectedArtifact(): ArtifactErrorsUi {
+    return JSON.parse(<string>localStorage.getItem("selectedArtifact"));
   }
 }

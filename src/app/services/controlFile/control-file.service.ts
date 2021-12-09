@@ -8,7 +8,6 @@ import {ControlFile} from "../../models/ControlFile";
 })
 export class ControlFileService {
   private link = "http://localhost:8080/controls";
-  private selectedControlFile: ControlFile = <ControlFile>{};
 
   constructor(private client: HttpClient) {
   }
@@ -18,10 +17,15 @@ export class ControlFileService {
   }
 
   public changeControlFileSelection(controlFile: ControlFile) {
-    this.selectedControlFile = controlFile;
+    localStorage.setItem("selectedControlFile", `${controlFile.client}${controlFile.moduleId == null ? "" : "/" + controlFile.moduleId}/${controlFile.name.split("/").pop()}`);
+    localStorage.setItem("selectedControlFileInfo", JSON.stringify(controlFile));
   }
 
-  public getControlFileSelection() {
-    return this.selectedControlFile;
+  public getControlFileSelection(): string {
+    return <string>localStorage.getItem("selectedControlFile");
+  }
+
+  public getControlFileSelectionInfo(): ControlFile {
+    return JSON.parse(<string>localStorage.getItem("selectedControlFileInfo"));
   }
 }
